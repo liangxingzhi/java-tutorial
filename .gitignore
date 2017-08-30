@@ -6,6 +6,10 @@
 *.settings
 /target/
 
+# idea
+.idea
+*.iml
+
 # Log file
 *.log
 
