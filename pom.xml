@@ -69,10 +69,13 @@
 			<groupId>opensymphony</groupId>
 			<artifactId>sitemesh</artifactId>
 			<version>2.4.2</version>
-		</dependency>
+		</dependency><dependency/>
 
 
-	</dependencies>
+	</depend<dependency><groupId>org.jetbrains</groupId><artifactId>annotations</artifactId><version>RELEASE</version></dependency>
+
+
+	es>
 	<dependencyManagement>
 		<dependencies>
 			<!-- An added benefit of using the BOM is that you no longer need to specify 
