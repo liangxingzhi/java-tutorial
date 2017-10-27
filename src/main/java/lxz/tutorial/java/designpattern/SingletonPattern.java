@@ -3,9 +3,10 @@ package lxz.tutorial.java.designpattern;
 public class SingletonPattern {
 
   public static void main(String[] args) {
-    EagerSingleton singleton = EagerSingleton.getInstance();
-    new EagerSingleton();
-
+//    EagerSingleton singleton = EagerSingleton.getInstance();
+//    new EagerSingleton();
+    LazySingleton lazySingleton = new LazySingleton();
+    lazySingleton = new LazySingleton();
 
   }
 
@@ -46,8 +47,19 @@ public class SingletonPattern {
    * 类还可能在其他的地方被主动使用从而被加载，那么这个时候实例化 instance 显然是不合适的。这个时候，这种方式相比第 3 种方式就显得很合理。
    */
   static class LazySingleton {
+    {
+      System.out.println("before new object");
+    }
+    static {
+      System.out.println("lazy singleton class loaded");
+    }
 
     private LazySingleton() {
+      System.out.println("new object");
+    }
+
+    {
+      System.out.println("after new object");
     }
 
     public static final LazySingleton getInstance() {
@@ -55,8 +67,11 @@ public class SingletonPattern {
     }
 
     private static class SingletonHolder {
-
+      static {
+        System.out.println("lazy singleton holder class loaded");
+      }
       private static final LazySingleton INSTANCE = new LazySingleton();
+
     }
   }
 

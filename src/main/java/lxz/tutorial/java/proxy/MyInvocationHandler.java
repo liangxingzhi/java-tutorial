@@ -18,7 +18,7 @@ public class MyInvocationHandler implements InvocationHandler {
         //功能增强-调用实际对象方法前打印日志
         LogUtil.logBefore();
         
-        System.out.println(method.getName());
+        System.out.println(method.toString());
 
         Object result = method.invoke(target, args);
 

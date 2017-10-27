@@ -19,6 +19,8 @@ public class PrimitiveTypes {
 		type.floatType();
 		type.longType();
 		type.doubleType();
+
+		type.integerClass();
 	}
 	
 	private static void newLine() {
@@ -44,6 +46,14 @@ public class PrimitiveTypes {
 		System.out.printf(BYTES_FORMAT, getBytes(Byte.MAX_VALUE));
 		System.out.printf(RANGE_FORMAT, String.valueOf(Byte.MIN_VALUE) + "~" + String.valueOf(Byte.MAX_VALUE));
 		newLine();
+	}
+
+	public void byteType2() {
+		short s1 = 10241;
+		// incompatiable types
+		// s1 = s1 + 1;
+		// has implicit type conversion
+		s1 += 1121234124;
 	}
 
 	public void shortType() {
@@ -99,5 +109,13 @@ public class PrimitiveTypes {
 		System.out.printf(TYPE_FORMAT, Void.TYPE);
 		System.out.printf(BYTES_FORMAT, 1);
 		newLine();
+	}
+
+	public void integerClass() {
+		Integer a = new Integer(3);
+		Integer b = 3;                  // 将3自动装箱成Integer类型
+		int c = 3;
+		System.out.println(a == b);     // false 两个引用没有引用同一对象
+		System.out.println(a == c);
 	}
 }
