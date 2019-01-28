@@ -30,6 +30,7 @@ public class SshExecuter implements Closeable {
 		jsch = new JSch();
 		jsch.addIdentity(sshInfo.getKey());
 		session = jsch.getSession(sshInfo.getUser(), sshInfo.getHost(), sshInfo.getPort());
+		session.setPassword(sshInfo.getPassPhrase());
 		UserInfo ui = new SshUserInfo(sshInfo.getPassPhrase());
 		session.setUserInfo(ui);
 		session.connect();
@@ -109,7 +110,7 @@ public class SshExecuter implements Closeable {
 	}
 
 	public static SshExecuter newInstance() throws Exception {
-		SshInfo i = new SshInfo("192.168.56.21", 22, "u01",
+		SshInfo i = new SshInfo("192.168.56.10", 22, "u01",
 				"C:\\Users\\ezliagu\\Documents\\MobaXterm\\home\\.ssh\\id_rsa", "root");
 		return new SshExecuter(i);
 	}
@@ -124,7 +125,8 @@ public class SshExecuter implements Closeable {
 
 	public static void main(String[] args) throws Exception {
 		SshExecuter executer = SshExecuter.newInstance();
-		executer.shell(Arrays.asList("mysql", "show databases;"));
+		executer.shell(Arrays.asList("ls -al", "logout"));
+		executer.exec("ls -al");
 		executer.close();
 	}
 }
