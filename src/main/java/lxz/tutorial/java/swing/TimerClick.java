@@ -11,7 +11,9 @@ import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,11 +52,27 @@ public class TimerClick {
       if (currentText == null || currentText.length() == 0) {
         currentText = "";
       } else {
-        currentText =  "\n" + "\n" + currentText;
+        currentText = "\n" + "\n" + currentText;
       }
-      textArea.setText("# " +
-          String.format("%3s", String.valueOf(counter.incrementAndGet())).replace(' ', '0') + " : " + LocalDateTime.now().toString() + currentText );
-      textArea.setFont(new Font("Calibri", Font.PLAIN, 24));
+      ZonedDateTime ldt = ZonedDateTime.now();
+
+      ZonedDateTime frt = ldt.withZoneSameInstant(ZoneId.of("Europe/Paris"));
+      ZonedDateTime cnt = ldt.withZoneSameInstant(ZoneId.of("Asia/Shanghai"));
+      ZonedDateTime ust = ldt.withZoneSameInstant(ZoneId.of("America/New_York"));
+      ZonedDateTime ukt = ldt.withZoneSameInstant(ZoneId.of("Europe/London"));
+      ZonedDateTime rut = ldt.withZoneSameInstant(ZoneId.of("Europe/Moscow"));
+
+
+//			OffsetDateTime rust = odt.withOffsetSameInstant(ZoneOffset.of("+03:00"));
+      DateTimeFormatter formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+      textArea.setText("# " + String.format("%3s", String.valueOf(counter.incrementAndGet())).replace(' ', '0')
+          + "\n" + String.format("%-3s", "CN") + " : " + formatter.format(cnt) + "\n"
+          + String.format("%-3s", "UK") + " : " + formatter.format(ukt) + "\n"
+          + String.format("%-3s", "US") + " : " + formatter.format(ust) + "\n"
+          + String.format("%-3s", "FR") + " : " + formatter.format(frt) + "\n"
+          + String.format("%-3s", "RUS") + " : " + formatter.format(rut) + "\n"
+          + currentText);
+      textArea.setFont(new Font("Consolas", Font.PLAIN, 16));
       scroll.setAutoscrolls(false);
       frame.setVisible(true);
     } catch (AWTException e) {
@@ -94,14 +112,13 @@ public class TimerClick {
   private void initialize() {
     frame = new JFrame();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    frame.setBounds(screenSize.width-480, screenSize.height-410, 480, 360);
+    frame.setBounds(screenSize.width - 520, screenSize.height - 410, 520, 360);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Click Timer");
-    textArea = new JTextArea(10, 20); //Rows and cols to be displayed
+    textArea = new JTextArea(10, 20); // Rows and cols to be displayed
     scroll = new JScrollPane(textArea);
 
-    comboBox = new JComboBox<>(
-        new SelectItem[]{new SelectItem(1), new SelectItem(2), new SelectItem(4)});
+    comboBox = new JComboBox<>(new SelectItem[] { new SelectItem(1), new SelectItem(2), new SelectItem(4) });
     TimerClick timerClick = this;
     comboBox.addItemListener(new ItemListener() {
       @Override
