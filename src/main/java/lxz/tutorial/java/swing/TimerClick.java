@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -28,6 +29,7 @@ public class TimerClick {
   private JComboBox<SelectItem> comboBox;
   private JScrollPane scroll;
   private Timer timer = null;
+  private AtomicInteger counter = new AtomicInteger();
 
   public void click() {
     try {
@@ -48,12 +50,12 @@ public class TimerClick {
       if (currentText == null || currentText.length() == 0) {
         currentText = "";
       } else {
-        currentText = currentText + "\n" + "\n";
+        currentText =  "\n" + "\n" + currentText;
       }
-      textArea.setText(currentText +
-          LocalDateTime.now().toString() + "\n" + MouseInfo.getPointerInfo().getLocation() + "\n"
-          + frame.getBounds());
+      textArea.setText("# " +
+          String.format("%3s", String.valueOf(counter.incrementAndGet())).replace(' ', '0') + " : " + LocalDateTime.now().toString() + currentText );
       textArea.setFont(new Font("Calibri", Font.PLAIN, 24));
+      scroll.setAutoscrolls(false);
       frame.setVisible(true);
     } catch (AWTException e) {
       e.printStackTrace();
@@ -92,7 +94,7 @@ public class TimerClick {
   private void initialize() {
     frame = new JFrame();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    frame.setBounds(screenSize.width-600, screenSize.height-500, 600, 450);
+    frame.setBounds(screenSize.width-480, screenSize.height-410, 480, 360);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Click Timer");
     textArea = new JTextArea(10, 20); //Rows and cols to be displayed
