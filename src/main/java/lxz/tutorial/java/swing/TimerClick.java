@@ -2,10 +2,12 @@ package lxz.tutorial.java.swing;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.MouseInfo;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -89,7 +91,8 @@ public class TimerClick {
    */
   private void initialize() {
     frame = new JFrame();
-    frame.setBounds(100, 100, 800, 600);
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    frame.setBounds(screenSize.width-600, screenSize.height-500, 600, 450);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Click Timer");
     textArea = new JTextArea(10, 20); //Rows and cols to be displayed
